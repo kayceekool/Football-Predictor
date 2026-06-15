@@ -3,18 +3,12 @@ import { getPredictions } from "../lib/api";
 
 export default async function Home() {
   let predictions: any[] = [];
+  let errorMessage = "";
 
   try {
     predictions = await getPredictions();
-    console.log(predictions);
-  } catch (error) {
-    return (
-      <main>
-        <h1>Football AI Predictions</h1>
-        <p>Error loading predictions.</p>
-        <pre>{String(error)}</pre>
-      </main>
-    );
+  } catch (error: any) {
+    errorMessage = error?.message || String(error);
   }
 
   return (
@@ -22,6 +16,10 @@ export default async function Home() {
       <h1>Football AI Predictions</h1>
 
       <p>Predictions loaded: {predictions.length}</p>
+
+      {errorMessage && (
+        <p>Error: {errorMessage}</p>
+      )}
 
       {predictions.map((prediction: any) => (
         <MatchCard
