@@ -2,18 +2,28 @@ import MatchCard from "../components/MatchCard";
 import { getPredictions } from "../lib/api";
 
 export default async function Home() {
-  const predictions = await getPredictions();
+  let predictions = [];
+
+  try {
+    predictions = await getPredictions();
+  } catch (error) {
+    console.error("Prediction fetch error:", error);
+  }
 
   return (
     <main>
       <h1>Football AI Predictions</h1>
 
-      {predictions.map((prediction: any) => (
-        <MatchCard
-          key={prediction.match}
-          prediction={prediction}
-        />
-      ))}
+      {Array.isArray(predictions) ? (
+        predictions.map((prediction: any) => (
+          <MatchCard
+            key={prediction.match}
+            prediction={prediction}
+          />
+        ))
+      ) : (
+        <p>No predictions available.</p>
+      )}
     </main>
   );
 }
