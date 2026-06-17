@@ -10,7 +10,13 @@ from app.api.matches import router as match_router
 
 from app.api.health import router as health_router
 
+from app.api.fixtures import router as fixture_router
 
+app.include_router(
+    fixture_router,
+    prefix="/fixtures",
+    tags=["fixtures"]
+)
 
 app = FastAPI(
 
