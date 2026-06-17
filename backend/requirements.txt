@@ -2,13 +2,12 @@ fastapi
 uvicorn
 sqlalchemy
 psycopg2-binary
-pydantic
 python-dotenv
+requests
 pandas
 numpy
 scikit-learn
 xgboost
 lightgbm
-joblib
-requests
 scipy
+joblib
