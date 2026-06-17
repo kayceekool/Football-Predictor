@@ -11,6 +11,9 @@ class Match(Base):
     __tablename__ = "matches"
 
     id = Column(Integer, primary_key=True)
+
+    fixture_id = Column(Integer, unique=True)
+
     home_team = Column(String)
     away_team = Column(String)
 
@@ -24,7 +27,7 @@ class Prediction(Base):
 
     id = Column(Integer, primary_key=True)
 
-    match_id = Column(Integer)
+    fixture_id = Column(Integer)
 
     home_win_prob = Column(Float)
     draw_prob = Column(Float)
