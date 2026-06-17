@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+from app.init_db import init_db
+
 
 
 from app.api.predictions import router as prediction_router
@@ -16,7 +18,7 @@ app = FastAPI(
 
 )
 
-
+init_db()
 
 app.include_router(
 
