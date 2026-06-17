@@ -1,8 +1,12 @@
 from fastapi import APIRouter
-from app.services.api_football import get_today_fixtures
+from app.services.api_football import from datetime import date
 
-router = APIRouter()
+def get_today_fixtures():
+    today = date.today().strftime("%Y-%m-%d")
 
-@router.get("/today")
-def today_fixtures():
-    return get_today_fixtures()
+    response = requests.get(
+        f"{BASE_URL}/fixtures?date={today}",
+        headers=headers
+    )
+
+    return response.json()
