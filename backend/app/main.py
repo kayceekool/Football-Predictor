@@ -1,3 +1,5 @@
+THIS_SHOULD_BREAK_THE_APP
+
 from fastapi import FastAPI
 
 from app.init_db import init_db
