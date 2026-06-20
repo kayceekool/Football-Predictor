@@ -36,3 +36,13 @@ app.include_router(
     prefix="/fixtures",
     tags=["fixtures"]
 )
+
+@app.get("/")
+def root():
+    return {
+        "status": "running",
+        "routes": [
+            str(route.path)
+            for route in app.routes
+        ]
+    }
