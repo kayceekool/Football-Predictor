@@ -1,6 +1,21 @@
-home_team
-away_team
-home_goals
-away_goals
-date
-league
+home_team,away_team,home_goals,away_goals
+Arsenal,Chelsea,2,1
+Liverpool,Everton,3,0
+Manchester City,Tottenham,4,2
+Chelsea,Arsenal,1,1
+Newcastle,Brighton,2,2
+Tottenham,Manchester United,1,0
+Liverpool,Arsenal,2,2
+Chelsea,Liverpool,0,2
+Brighton,Everton,3,1
+Manchester United,Newcastle,2,1
+Tottenham,Chelsea,1,3
+Arsenal,Manchester City,2,0
+Everton,Liverpool,1,2
+Brighton,Arsenal,0,1
+Newcastle,Tottenham,3,2
+Manchester United,Chelsea,1,1
+Liverpool,Brighton,4,1
+Manchester City,Everton,5,0
+Arsenal,Newcastle,3,1
+Tottenham,Liverpool,2,2
