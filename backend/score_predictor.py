@@ -1,25 +1,50 @@
 from scipy.stats import poisson
 
 def predict_score(
-    home_xg,
-    away_xg
+    expected_home_goals,
+    expected_away_goals
 ):
 
-    best_score = None
-    best_prob = 0
+    scores = []
 
-    for h in range(6):
-        for a in range(6):
+    for home in range(6):
 
-            p = (
-                poisson.pmf(h, home_xg)
+        for away in range(6):
+
+            probability = (
+                poisson.pmf(
+                    home,
+                    expected_home_goals
+                )
                 *
-                poisson.pmf(a, away_xg)
+                poisson.pmf(
+                    away,
+                    expected_away_goals
+                )
             )
 
-            if p > best_prob:
+            scores.append(
+                (
+                    f"{home}-{away}",
+                    probability
+                )
+            )
 
-                best_prob = p
-                best_score = f"{h}-{a}"
+    scores.sort(
+        key=lambda x: x[1],
+        reverse=True
+    )
 
-    return best_score
+    return scores[:5]
+
+
+if __name__ == "__main__":
+
+    results = predict_score(
+        1.8,
+        1.1
+    )
+
+    for score in results:
+
+        print(score)
