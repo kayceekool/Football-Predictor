@@ -5,8 +5,11 @@ from app.init_db import init_db
 from app.api.predictions import router as prediction_router
 from app.api.matches import router as match_router
 from app.api.health import router as health_router
-from app.api.fixtures import router as fixture_router
-
+try:
+    from app.api.fixtures import router as fixture_router
+    print("Fixtures router loaded successfully")
+except Exception as e:
+    print("Fixtures router failed:", e)
 app = FastAPI(
     title="Football Predictor API"
 )
