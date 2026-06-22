@@ -23,6 +23,13 @@ export default function MatchCard(
      : "NO"}
    </p>
 
+<p>
+ Over 1.5:
+ {prediction.over15
+   ? "YES"
+   : "NO"}
+</p>
+
    <p>
     BTTS:
     {prediction.btts
