@@ -1,57 +1,57 @@
-import joblib
 import pandas as pd
 
-winner_model = joblib.load(
-    "winner_model.pkl"
-)
-
-over15_model = joblib.load(
-    "over15_model.pkl"
-)
-
-over25_model = joblib.load(
-    "over25_model.pkl"
-)
-
-btts_model = joblib.load(
-    "btts_model.pkl"
+from app.services.model_loader import (
+    winner_model,
+    over15_model,
+    over25_model,
+    btts_model
 )
 
 
-def predict_match(
-    home_avg_scored,
-    home_avg_conceded,
-    away_avg_scored,
-    away_avg_conceded
-):
+def predict_match(features):
 
-    X = pd.DataFrame([
-        {
-            "home_avg_scored":
-                home_avg_scored,
+    X = pd.DataFrame([features])
 
-            "home_avg_conceded":
-                home_avg_conceded,
+    winner_probs = winner_model.predict_proba(X)[0]
 
-            "away_avg_scored":
-                away_avg_scored,
+    over15_prob = (
+        over15_model.predict_proba(X)[0][1]
+    )
 
-            "away_avg_conceded":
-                away_avg_conceded
-        }
-    ])
+    over25_prob = (
+        over25_model.predict_proba(X)[0][1]
+    )
 
-    winner = winner_model.predict(X)[0]
+    btts_prob = (
+        btts_model.predict_proba(X)[0][1]
+    )
 
-    over15 = over15_model.predict(X)[0]
-
-    over25 = over25_model.predict(X)[0]
-
-    btts = btts_model.predict(X)[0]
+    winner_index = winner_probs.argmax()
 
     return {
-        "winner": int(winner),
-        "over15": bool(over15),
-        "over25": bool(over25),
-        "btts": bool(btts)
+        "winner": int(winner_index),
+
+        "winner_probability":
+            round(
+                winner_probs[winner_index] * 100,
+                2
+            ),
+
+        "over15_probability":
+            round(
+                over15_prob * 100,
+                2
+            ),
+
+        "over25_probability":
+            round(
+                over25_prob * 100,
+                2
+            ),
+
+        "btts_probability":
+            round(
+                btts_prob * 100,
+                2
+            )
     }
