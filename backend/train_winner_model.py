@@ -9,20 +9,17 @@ from xgboost import XGBClassifier
 from feature_engineering import create_features
 
 
-# Load historical matches
 df = pd.read_csv("data/matches.csv")
 
 
-# Target
-# 0 = Home Win
-# 1 = Draw
-# 2 = Away Win
-
 def get_result(row):
+
     if row["home_goals"] > row["away_goals"]:
         return 0
+
     elif row["home_goals"] < row["away_goals"]:
         return 2
+
     return 1
 
 
@@ -31,14 +28,10 @@ df["result"] = df.apply(
     axis=1
 )
 
-
-# Create pre-match style features
 X = create_features(df)
 
 y = df["result"]
 
-
-# Train/Test Split
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
@@ -46,15 +39,12 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42
 )
 
-
-# Winner Model
 model = XGBClassifier(
-    n_estimators=300,
+    n_estimators=500,
     max_depth=6,
-    learning_rate=0.05,
+    learning_rate=0.03,
     objective="multi:softprob",
-    num_class=3,
-    random_state=42
+    num_class=3
 )
 
 model.fit(
@@ -62,8 +52,6 @@ model.fit(
     y_train
 )
 
-
-# Evaluate
 predictions = model.predict(
     X_test
 )
@@ -77,8 +65,6 @@ print(
     f"Winner Accuracy: {accuracy:.4f}"
 )
 
-
-# Save model
 joblib.dump(
     model,
     "winner_model.pkl"
