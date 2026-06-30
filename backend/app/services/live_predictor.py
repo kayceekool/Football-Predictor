@@ -5,6 +5,14 @@ from app.services.predictor import predict_match
 from score_predictor import predict_score
 from team_stats import TeamStats
 
+from app.services.expected_goals import expected_goals
+
+expected_home, expected_away = expected_goals(features)
+
+score_predictions = predict_score(
+    expected_home,
+    expected_away
+)
 
 def generate_today_predictions():
 
