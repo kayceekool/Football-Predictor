@@ -1,22 +1,24 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL =
+process.env.NEXT_PUBLIC_API_URL;
 
-export async function getPredictions() {
-  if (!API_URL) {
-    throw new Error("NEXT_PUBLIC_API_URL is not configured");
-  }
+export async function getPredictions(){
 
-  const response = await fetch(
-    `${API_URL}/predictions/today`,
-    {
-      cache: "no-store",
-    }
-  );
+    const response = await fetch(
 
-  if (!response.ok) {
-    throw new Error(
-      `API error: ${response.status}`
+        `${API_URL}/live/today`,
+
+        {
+            cache:"no-store"
+        }
+
     );
-  }
 
-  return response.json();
+    if(!response.ok){
+
+        return [];
+
+    }
+
+    return response.json();
+
 }
