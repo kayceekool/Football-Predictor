@@ -54,4 +54,14 @@ def predict_match(features):
                 btts_prob * 100,
                 2
             )
+
+WINNERS = {
+
+    0: "Home",
+
+    1: "Draw",
+
+    2: "Away"
+
+}
     }
