@@ -61,4 +61,10 @@ def root():
             str(route.path)
             for route in app.routes
         ]
+
+@app.get("/version")
+def version():
+    return {
+        "version": "LIVE_API_V1"
+    }
     }
