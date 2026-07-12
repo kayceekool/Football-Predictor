@@ -19,6 +19,8 @@ except Exception as e:
     fixture_router = None
     print("Fixtures router failed:", e)
 
+logger.info("Starting Football Predictor AI")
+
 app = FastAPI(
     title="Football Predictor API"
 )
