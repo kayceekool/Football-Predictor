@@ -9,7 +9,9 @@ from app.api.version import router as version_router
 from app.api.predictions import router as prediction_router
 from app.api.matches import router as match_router
 from app.api.health import router as health_router
-from app.api.live_predictions import router as live_prediction_router
+from app.api.live_predictions import (
+    router as live_prediction_router
+)
 
 try:
     from app.api.fixtures import router as fixture_router
@@ -25,19 +27,8 @@ app = FastAPI(
     version=settings.VERSION
 )
 
-# Initialize database
 init_db()
 
-# Root endpoint
-@app.get("/")
-def root():
-    return {
-        "application": settings.APP_NAME,
-        "version": settings.VERSION,
-        "status": "running"
-    }
-
-# Register API routers
 app.include_router(
     version_router,
     prefix="/version",
@@ -74,3 +65,12 @@ app.include_router(
     prefix="/live",
     tags=["Live Predictions"]
 )
+
+
+@app.get("/")
+def root():
+    return {
+        "application": settings.APP_NAME,
+        "version": settings.VERSION,
+        "status": "running"
+    }
