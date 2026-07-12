@@ -5,19 +5,18 @@ from app.init_db import init_db
 from app.core.config import settings
 from app.core.logging import logger
 
+from app.api.version import router as version_router
 from app.api.predictions import router as prediction_router
 from app.api.matches import router as match_router
 from app.api.health import router as health_router
-from app.api.live_predictions import (
-    router as live_prediction_router
-)
+from app.api.live_predictions import router as live_prediction_router
 
 try:
     from app.api.fixtures import router as fixture_router
-    print("Fixtures router loaded successfully")
+    logger.info("Fixtures router loaded successfully")
 except Exception as e:
     fixture_router = None
-    print("Fixtures router failed:", e)
+    logger.error(f"Fixtures router failed: {e}")
 
 logger.info("Starting Football Predictor AI")
 
@@ -25,31 +24,49 @@ app = FastAPI(
     title=settings.APP_NAME,
     version=settings.VERSION
 )
+
+# Initialize database
 init_db()
+
+# Root endpoint
+@app.get("/")
+def root():
+    return {
+        "application": settings.APP_NAME,
+        "version": settings.VERSION,
+        "status": "running"
+    }
+
+# Register API routers
+app.include_router(
+    version_router,
+    prefix="/version",
+    tags=["Version"]
+)
 
 app.include_router(
     prediction_router,
     prefix="/predictions",
-    tags=["predictions"]
+    tags=["Predictions"]
 )
 
 app.include_router(
     match_router,
     prefix="/matches",
-    tags=["matches"]
+    tags=["Matches"]
 )
 
 app.include_router(
     health_router,
     prefix="/health",
-    tags=["health"]
+    tags=["Health"]
 )
 
 if fixture_router:
     app.include_router(
         fixture_router,
         prefix="/fixtures",
-        tags=["fixtures"]
+        tags=["Fixtures"]
     )
 
 app.include_router(
@@ -57,19 +74,3 @@ app.include_router(
     prefix="/live",
     tags=["Live Predictions"]
 )
-
-@app.get("/")
-def root():
-    return {
-        "status": "running",
-        "routes": [
-            str(route.path)
-            for route in app.routes
-        ]
-
-@app.get("/version")
-def version():
-    return {
-        "version": "LIVE_API_V1"
-    }
-    }
