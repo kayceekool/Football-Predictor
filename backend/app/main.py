@@ -2,6 +2,9 @@ from fastapi import FastAPI
 
 from app.init_db import init_db
 
+from app.core.config import settings
+from app.core.logging import logger
+
 from app.api.predictions import router as prediction_router
 from app.api.matches import router as match_router
 from app.api.health import router as health_router
