@@ -22,9 +22,9 @@ except Exception as e:
 logger.info("Starting Football Predictor AI")
 
 app = FastAPI(
-    title="Football Predictor API"
+    title=settings.APP_NAME,
+    version=settings.VERSION
 )
-
 init_db()
 
 app.include_router(
